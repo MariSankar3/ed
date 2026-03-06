@@ -147,50 +147,31 @@ export default function SyncTranslationPage() {
     setIsSyncing(true);
     setSyncedKeys([]);
     setDetectedKeys(null);
-
-    let langsToProcess =
-      selectedLang === "all" ? generatedLanguages : [selectedLang];
-    let aggregatedDetectedKeys = new Set();
-    let hasError = false;
-    let errorMsg = "";
+    setProgressStatus("Scanning en.json for missing or modified keys...");
 
     try {
-      for (const lang of langsToProcess) {
-        setProgressStatus(
-          `Scanning en.json and ${lang}.json for missing or modified keys...`,
-        );
+      const response = await fetch("/api/sync-translation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetLang: selectedLang, dryRun: true }),
+      });
 
-        const response = await fetch("/api/sync-translation", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ targetLang: lang, dryRun: true }),
-        });
+      const data = await response.json();
 
-        const rawText = await response.text();
-        let data = {};
-        try {
-          data = JSON.parse(rawText);
-        } catch (e) {
-          throw new Error("Crashed server response");
-        }
-
-        if (response.ok) {
-          if (data.keysToTranslate) {
-            data.keysToTranslate.forEach((k) => aggregatedDetectedKeys.add(k));
-          }
+      if (response.ok) {
+        if (selectedLang === "all") {
+          const aggregatedDetectedKeys = new Set();
+          data.processed.forEach((p) => {
+            if (p.keysToTranslate)
+              p.keysToTranslate.forEach((k) => aggregatedDetectedKeys.add(k));
+          });
+          setDetectedKeys(Array.from(aggregatedDetectedKeys));
         } else {
-          hasError = true;
-          errorMsg = data.error;
-          break;
+          setDetectedKeys(data.translatedKeys || []);
         }
-      }
-
-      if (hasError) {
-        setProgressStatus(`❌ Error detecting changes: ${errorMsg}`);
-      } else {
         setProgressStatus("");
-        const keysArr = Array.from(aggregatedDetectedKeys);
-        setDetectedKeys(keysArr);
+      } else {
+        setProgressStatus(`❌ Error detecting changes: ${data.error}`);
       }
     } catch (error) {
       setProgressStatus(`❌ Error: ${error.message}`);
@@ -203,59 +184,43 @@ export default function SyncTranslationPage() {
     setIsSyncing(true);
     setSyncedKeys([]);
 
-    let langsToProcess =
-      selectedLang === "all" ? generatedLanguages : [selectedLang];
-    let aggregatedSyncedKeys = new Set();
-    let hasError = false;
-    let errorMsg = "";
-
     try {
-      for (const lang of langsToProcess) {
-        setProgressStatus(
-          `Syncing ${detectedKeys ? detectedKeys.length : "missing"} keys to Google Translate API for ${lang}.json...`,
-        );
+      setProgressStatus(
+        `Syncing ${detectedKeys ? detectedKeys.length : "missing"} keys via server-side batch processing...`,
+      );
 
-        const response = await fetch("/api/sync-translation", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ targetLang: lang }),
-        });
+      const response = await fetch("/api/sync-translation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetLang: selectedLang }),
+      });
 
-        const rawText = await response.text();
-        let data = {};
-        try {
-          data = JSON.parse(rawText);
-        } catch (e) {
-          throw new Error(
-            `Server crashed or returned HTML. Check Next.js terminal logs. Preview: ${rawText.slice(0, 50)}...`,
-          );
-        }
+      const data = await response.json();
 
-        if (response.ok) {
-          if (data.translatedKeys && data.translatedKeys.length > 0) {
-            data.translatedKeys.forEach((k) => aggregatedSyncedKeys.add(k));
-          }
+      if (response.ok) {
+        let aggregatedSyncedKeys = new Set();
+        if (selectedLang === "all") {
+          data.processed.forEach((p) => {
+            if (p.translatedKeys)
+              p.translatedKeys.forEach((k) => aggregatedSyncedKeys.add(k));
+          });
         } else {
-          hasError = true;
-          errorMsg = data.error;
-          break;
+          if (data.translatedKeys)
+            data.translatedKeys.forEach((k) => aggregatedSyncedKeys.add(k));
         }
-      }
 
-      if (hasError) {
-        setProgressStatus(
-          `❌ Error: ${errorMsg || "Failed to sync translations"}`,
-        );
-      } else {
         const targetLabel =
           selectedLang === "all" ? "all languages" : `${selectedLang}.json`;
         setProgressStatus(
           `✅ Success! Translations synced permanently for ${targetLabel}.`,
         );
+
         const keysArr = Array.from(aggregatedSyncedKeys);
-        if (keysArr.length > 0) {
-          setSyncedKeys(keysArr);
-        }
+        if (keysArr.length > 0) setSyncedKeys(keysArr);
+      } else {
+        setProgressStatus(
+          `❌ Error: ${data.error || "Failed to sync translations"}`,
+        );
       }
     } catch (error) {
       setProgressStatus(`❌ Error: ${error.message}`);

@@ -578,7 +578,7 @@
   "nav_pricing": "Prezzi",
   "nav_services": "Servizi",
   "nav_teams_trust": "Fiducia nella squadra",
-  "nav_works": "Clienti e Lavori",
+  "nav_works": "Clienti e lavori",
   "sample_heading": "Ravi ha aperto un piccolo caffè in una strada tranquilla. Non vendeva solo caffè: vendeva conforto. Ogni mattina ricordava i nomi dei suoi clienti e le loro bevande preferite.",
   "second_subtext_1": "Sai sempre quanto stai pagando, senza sorprese o costi nascosti.",
   "second_title": "Prezzi semplici",
@@ -652,7 +652,6 @@
   "pricing_one_time": "Unico",
   "pricing_learn_more": "Saperne di più",
   "pricing_details": "Dettagli sui prezzi",
-  "pricing_back_to_pricing": "Torna ai prezzi",
   "pricing_one_time_projects": "PROGETTI UNICI",
   "pricing_monthly_pods": "POD MENSILI",
   "pricing_popular_choice": "Scelta popolare",
@@ -808,5 +807,15 @@
   "get_in_touch_sitemap": "Mappa del sito",
   "teams_trust_card_0_bullet_4": "Design visivo e gerarchia visiva",
   "teams_trust_card_0_bullet_5": "Competenze tecniche",
-  "teams_trust_card_3_bullet_0": "Flessibilità e adattabilità"
+  "teams_trust_card_3_bullet_0": "Flessibilità e adattabilità",
+  "menu_work": "Lavoro",
+  "work_casestudy": "Caso di studio",
+  "teams_trust_seo_p1": "Il nostro studio di progettazione gode della fiducia di startup e team in tutto il mondo per la progettazione di prodotti, UI UX, branding ed esperienze digitali che portano risultati.",
+  "teams_trust_seo_p2": "Scopri di più sul nostro",
+  "teams_trust_card_2_title": "CHIAREZZA VISIVA, IMPATTO FUNZIONALE",
+  "pricing_back_to_pricing": "Torniamo ai prezzi",
+  "cs_cs_002_section_test-and-validating_label": "Test e convalida",
+  "cs_cs_002_section_test-and-validating_subtitle": "Test di usabilità basati sui dati",
+  "cs_cs_002_section_conclusion_label": "Conclusione",
+  "cs_cs_002_section_conclusion_subtitle": "Conclusione e punti chiave"
 }

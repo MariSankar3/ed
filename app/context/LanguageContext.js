@@ -1,13 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import enTranslations from "../../en.json";
-import deTranslations from "../../de.json";
 
-const translationsCache = {
-  en: enTranslations,
-  de: deTranslations
-};
+const translationsCache = {};
 
 const LanguageContext = createContext();
 

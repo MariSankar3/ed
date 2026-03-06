@@ -43,7 +43,7 @@ export default function PriceDetailsPage() {
             >
                 <button 
                     onClick={() => router.push('/pricing')}
-                    className="self-start mb-4 flex items-center gap-2 px-5  pt-2.5 rounded-full text-white transition-all group "
+                    className="self-start mb-4 flex items-center gap-2 px-5  rounded-full text-white transition-all group "
                 >
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:-translate-x-1 -ml-3 transition-transform">
                         <path d="M19 12H5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
