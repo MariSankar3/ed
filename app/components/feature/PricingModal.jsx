@@ -267,11 +267,11 @@ export default function PricingModal({ open, onClose }) {
                       <div className="flex items-start gap-4">
                         <button
                           onClick={handleBack}
-                          className="mt-2 text-white/60 hover:text-white transition-colors"
+                          className="mt-2 text-white/100 hover:text-white transition-colors"
                         >
                           <svg
-                            width="24"
-                            height="24"
+                            width="26"
+                            height="26"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
