@@ -34,10 +34,10 @@ export default function PriceDetailsPage() {
 
     return (
         <CommonLayout page="Pricing">
-            <div className="w-full h-full flex flex-col items-center pt-8 px-4 pb-8">
+            <div className="w-full h-full flex flex-col items-center pt-6 px-4 pb-8">
                 <button 
                     onClick={() => router.push('/pricing')}
-                    className="self-start mb-6 flex items-center gap-2 text-white hover:text-white transition-colors"
+                    className="self-start mb-4 flex items-center gap-2 text-white hover:text-white transition-colors"
                 >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M19 12H5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

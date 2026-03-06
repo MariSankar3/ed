@@ -32,7 +32,7 @@ function PricingCard({ card, isFeatured, onLearnMore, muted, style, className, i
                 </div>
             )}
 
-            <div className={`flex-1 flex flex-col items-center justify-between w-full h-full px-4 md:px-4 py-4 rounded-[31px] bg-[#121212] mt-auto relative z-10]`}>
+            <div className={`flex-1 flex flex-col items-center justify-between w-full h-full px-2 md:px-2 py-2 rounded-[31px] bg-[#121212] mt-auto relative z-10]`}>
                 <div className="flex flex-col w-full items-center justify-center mb-2">
                     <div className="text-center text-white font-antonio mb-3">
                         <h3 className="text-[24px] leading-tight font-bold mb-1">
@@ -115,7 +115,7 @@ export default function PricingPage() {
 
     const handleTabSwitch = (tab) => {
         setActiveTab(tab);
-        setActiveIdx(0); // Reset index
+        setActiveIdx(tab === "monthly" ? 1 : 0);
     };
 
     const goLeft = () => setActiveIdx((idx) => Math.max(0, idx - 1));
@@ -151,7 +151,7 @@ export default function PricingPage() {
 
             <div className="w-full h-full flex flex-col items-center pt-8">
                 {/* Toggle Group */}
-                <div className="flex bg-[#1A1A1] p-1 rounded-full border border-[#ffffff1a] mb-12">
+                <div className="flex bg-[#1A1A1] p-1 rounded-full border border-[#ffffff1a] mb-6">
                     <button
                         onClick={() => handleTabSwitch("one-time")}
                         className={`px-4 py-2 rounded-full text-[10px] md:text-xs font-antonio font-bold transition-all ${activeTab === "one-time" ? "bg-[#D9FF00] text-black shadow-lg shadow-[#D9FF00]/20" : "text-white opacity-40 hover:opacity-100"}`}
@@ -228,7 +228,7 @@ export default function PricingPage() {
 
                 {/* Contact CTA */}
                 <div
-                    className="w-full flex flex-col items-center mt-9 font-antonio"
+                    className="w-full flex flex-col items-center mt-9 mb-1 font-antonio"
                     role="contentinfo"
                 >
                     <span className="text-[white]/90 text-[18px] mb-4 tracking-[0.05em] font-light">
