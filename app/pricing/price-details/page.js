@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import CommonLayout from "../../components/common/CommonLayout";
 import pricingData from "../../data/pricingData";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "../../context/LanguageContext";
@@ -34,7 +35,12 @@ export default function PriceDetailsPage() {
 
     return (
         <CommonLayout page="Pricing">
-            <div className="w-full h-full flex flex-col items-center pt-6 px-4 pb-8">
+            <motion.div 
+                initial={{ opacity: 0, filter: "blur(10px)", y: 20 }}
+                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="w-full h-full flex flex-col items-center pt-6 px-4 pb-8"
+            >
                 <button 
                     onClick={() => router.push('/pricing')}
                     className="self-start mb-4 flex items-center gap-2 px-5  pt-2.5 rounded-full text-white transition-all group "
@@ -67,7 +73,7 @@ export default function PriceDetailsPage() {
                                 <div key={tIdx} className={`relative flex flex-col items-center justify-between w-full bg-[#121212] rounded-[31px] px-6 py-6 border border-[#4F4E4E] ${tier.isPopular ? 'mt-8 border-[#D9FF00]  ' : ''}`}>
                                     {tier.isPopular && (
                                         <div className="absolute -top-[22px] w-[calc(100%+2px)] -right-[1px] h-[50px] bg-[#D9FF00]  rounded-t-[33.5px] flex items-start justify-center pt-4 z-0">
-                                            <span className="text-black text-[12px] md:text-xs uppercase font-bold tracking-widest font-antonio">
+                                            <span className="text-black text-[15px] md:text-xs uppercase font-bold tracking-widest font-antonio">
                                                 {t("pricing_popular_choice", "Popular Choice")}
                                             </span>
                                         </div>
@@ -181,7 +187,7 @@ export default function PriceDetailsPage() {
                         )}
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </CommonLayout>
     );
 }
