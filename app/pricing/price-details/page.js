@@ -47,13 +47,13 @@ export default function PriceDetailsPage() {
 
                 <div className="relative w-full max-w-[390px] bg-[#121212] rounded-[32px] px-4 pb-8 pt-2 flex flex-col items-center shadow-2xl">
                     {/* Header */}
-                    <div className="w-full flex items-start justify-between pb-4 border-[#ffffff1a] mb-6 relative">
+                    <div className="w-full flex items-start justify-between pb-4 border-[#ffffff1a] mb-4 relative">
                         <div className="flex flex-col">
-                            <h2 className="text-white text-[24px] font-bold font-antonio leading-tight mb-1 tracking-wide">
+                            <h2 className="text-white text-[26px] uppercase font-bold font-antonio leading-tight mb-1 tracking-wide">
                                 {t(`pricing_${categoryKey}_title`, data.title)}
                             </h2>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-white/60 text-[13px] font-antonio tracking-wider">
+                                <span className="text-white/60 text-[14px] font-antonio tracking-wider">
                                     {t("pricing_includes", "Includes :")} {t(`pricing_${categoryKey}_desc`, data.description)}
                                 </span>
                             </div>
@@ -103,7 +103,7 @@ export default function PriceDetailsPage() {
                                             return (
                                             <li
                                                 key={idx}
-                                                className="w-[130%] py-4 -ml-8 border-b border-[#ffffff1a]/50 last:border-b-0 flex items-start group"
+                                                className="w-[120%] py-4 -ml-9 border-b border-[#ffffff1a]/50 last:border-b-0 flex items-start group"
                                             >
                                                 <span className="font-antonio tracking-widest flex items-baseline">
                                                     {translatedFeature.split(" /").map((part, index) => (

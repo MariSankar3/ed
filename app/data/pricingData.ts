@@ -182,13 +182,13 @@ export const oneTimeProjects: PricingData = {
   audit: {
     title: 'UX Audit & Redesign',
     description: 'Full Evaluation + Figma Handoff',
-    price: '$169',
+    price: '$179',
     image: '/images/pricing/d5.png',
     tags: ['Complete Audit'],
     tiers: [
       {
         title: 'Complete Audit',
-        price: '$169',
+        price: '$179',
         features: [
           'Full UX evaluation /Existing product',
           'Detailed improvement report',

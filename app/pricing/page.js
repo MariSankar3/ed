@@ -32,13 +32,13 @@ function PricingCard({ card, isFeatured, onLearnMore, muted, style, className, i
                 </div>
             )}
 
-            <div className={`flex-1 flex flex-col items-center justify-between w-full h-full px-2 md:px-2 py-2 rounded-[31px] bg-[#121212] mt-auto relative z-10]`}>
+            <div className={`flex-1 flex flex-col items-center justify-between w-full h-full px-1 md:px-1 py-1 rounded-[31px] bg-[#121212] mt-auto relative z-10]`}>
                 <div className="flex flex-col w-full items-center justify-center mb-2">
                     <div className="text-center text-white font-antonio mb-3">
                         <h3 className="text-[24px] leading-tight font-bold mb-1">
                             {t(`pricing_${categoryKey}_title`, card.title)}
                         </h3>
-                        <p className="text-[12px] text-white/80 font-light">
+                        <p className="text-[14px] text-white/80 font-light">
                             ({t(`pricing_${categoryKey}_desc`, card.description)})
                         </p>
                     </div>
