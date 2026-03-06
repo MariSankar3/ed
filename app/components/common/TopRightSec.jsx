@@ -1,7 +1,7 @@
 "use client";
 
 import { ROUTE } from "../../constants/constants";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import React, { useRef } from "react";
 import { Arrow } from "../icons/icons";
 import { gsap } from "gsap";
@@ -172,6 +172,7 @@ const PAGES = [
 
 function TopRightSec({ activePage = "Work", className = "", onPricingClick }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { t, targetLang } = useLanguage();
 
   const getLabelTranslation = (label) => {
@@ -211,6 +212,8 @@ function TopRightSec({ activePage = "Work", className = "", onPricingClick }) {
       ? PAGES[currentIndex]
       : { label: activePage, route: "#" };
 
+  const isPricingDetails = pathname?.includes("/pricing/price-details");
+
   const fadeUp = {
     hidden: { opacity: 0, y: -40 },
     visible: {
@@ -230,7 +233,7 @@ function TopRightSec({ activePage = "Work", className = "", onPricingClick }) {
             return (
               <React.Fragment key={page.id}>
                 <motion.button
-                  initial="hidden"
+                  initial={isPricingDetails ? "visible" : "hidden"}
                   animate="visible"
                   variants={fadeUp}
                   type="button"
@@ -273,7 +276,7 @@ function TopRightSec({ activePage = "Work", className = "", onPricingClick }) {
           return (
             <React.Fragment key={page.id}>
               <motion.a
-                initial="hidden"
+                initial={isPricingDetails ? "visible" : "hidden"}
                 animate="visible"
                 variants={fadeUp}
                 href={page.route}
@@ -303,7 +306,7 @@ function TopRightSec({ activePage = "Work", className = "", onPricingClick }) {
       <div className="h-full flex flex-col">
         {/* {prevPage.label !== activePage && ( */}
         <motion.a
-          initial="hidden"
+          initial={isPricingDetails ? "visible" : "hidden"}
           animate="visible"
           variants={fadeUp}
           href={
@@ -330,7 +333,7 @@ function TopRightSec({ activePage = "Work", className = "", onPricingClick }) {
         </motion.a>
 
         <motion.a
-          initial="hidden"
+          initial={isPricingDetails ? "visible" : "hidden"}
           animate="visible"
           variants={fadeUp}
           href={activePageObj.route}

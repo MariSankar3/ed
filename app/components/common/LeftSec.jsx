@@ -124,7 +124,7 @@ function LeftSec() {
           >
             {t(
               "leftsec_copyright",
-              "© 2025 . Ethereal Designs . All rights Reserved",
+              "© 2026 . Ethereal Designs . All rights Reserved",
             )}
           </p>
         </motion.div>
