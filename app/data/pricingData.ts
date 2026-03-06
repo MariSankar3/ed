@@ -110,13 +110,13 @@ export const oneTimeProjects: PricingData = {
   saas: {
     title: 'SaaS / B2B Product UI',
     description: 'Design only – Figma handoff',
-    price: '$179',
+    price: '$169',
     image: '/images/pricing/d3.png',
     tags: ['Starter', 'Growth', 'Pro'],
     tiers: [
       {
         title: 'Starter',
-        price: '$179',
+        price: '$169',
         features: [
           'Screens /5-8 core screens',
           'User Flow /Basic user flow',

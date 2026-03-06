@@ -32,7 +32,7 @@ function PricingCard({ card, isFeatured, onLearnMore, muted, style, className, i
                 </div>
             )}
 
-            <div className={`flex-1 flex flex-col items-center justify-between w-full h-full px-1 md:px-1 py-1 rounded-[31px] bg-[#121212] mt-auto relative z-10]`}>
+            <div className={`flex-1 flex flex-col items-center justify-between w-full h-full px-1 md:px-1 py-1 rounded-[31px] bg-[#121212] mt-auto relative z-10`}>
                 <div className="flex flex-col w-full items-center justify-center mb-2">
                     <div className="text-center text-white font-antonio mb-3">
                         <h3 className="text-[24px] leading-tight font-bold mb-1">
@@ -99,11 +99,11 @@ export default function PricingPage() {
 
     const handleLearnMore = (key) => {
         if (typeof window !== "undefined" && window.innerWidth >= 768) {
-            setSelectedKey(currentData[key]);
+            setSelectedKey({ ...currentData[key], categoryKey: key });
             setModalOpen(true);
         } else {
             if (activeTab === "monthly") {
-                setSelectedKey(currentData[key]);
+                setSelectedKey({ ...currentData[key], categoryKey: key });
                 setModalOpen(true);
             } else {
                 localStorage.setItem("selectedPricingKey", key);

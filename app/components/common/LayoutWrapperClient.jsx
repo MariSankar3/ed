@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import SplashTransition from "./SplashTransition";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -8,12 +8,28 @@ import { LanguageProvider } from "../../context/LanguageContext";
 
 function LayoutWrapperClient({ children }) {
   const pathname = usePathname();
-  const [isAnimating, setIsAnimating] = useState(true);
-  const [showSplash, setShowSplash] = useState(true); // Splash is mounted
-  const [showContent, setShowContent] = useState(false); // Controls when content is visible
+  const prevPathRef = useRef(pathname);
+  const isPricingDetails = pathname?.includes("/pricing/price-details");
+  const [isAnimating, setIsAnimating] = useState(!isPricingDetails);
+  const [showSplash, setShowSplash] = useState(!isPricingDetails); // Splash is mounted
+  const [showContent, setShowContent] = useState(isPricingDetails); // Controls when content is visible
   const [aboutUsOpen, setAboutUsOpen] = useState(false);
 
   useEffect(() => {
+    // Skip splash transition between /pricing and /pricing/price-details (both ways)
+    const isToDetails = pathname?.includes("/pricing/price-details");
+    const isFromDetails = prevPathRef.current?.includes(
+      "/pricing/price-details",
+    );
+    const isToPricingBase = pathname?.includes("/pricing") && !isToDetails;
+
+    if (isToDetails || (isFromDetails && isToPricingBase)) {
+      setIsAnimating(false);
+      setShowSplash(false);
+      setShowContent(true);
+      return;
+    }
+
     setIsAnimating(true);
     setShowSplash(true);
     setShowContent(false);
@@ -40,6 +56,10 @@ function LayoutWrapperClient({ children }) {
       clearTimeout(animTimeout);
       clearTimeout(revealContentTimeout);
     };
+  }, [pathname]);
+
+  useEffect(() => {
+    prevPathRef.current = pathname;
   }, [pathname]);
 
   useEffect(() => {

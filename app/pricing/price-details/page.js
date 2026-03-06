@@ -37,13 +37,13 @@ export default function PriceDetailsPage() {
             <div className="w-full h-full flex flex-col items-center pt-6 px-4 pb-8">
                 <button 
                     onClick={() => router.push('/pricing')}
-                    className="self-start mb-4 flex items-center gap-2 text-white hover:text-white transition-colors"
+                    className="self-start mb-4 flex items-center gap-2 px-5 pt-2.5 border-[#D9FF00]/20 rounded-full text-white/80 hover:text-[#D9FF00] transition-all group "
                 >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:-translate-x-1 transition-transform">
                         <path d="M19 12H5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         <path d="M12 19L5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                </button>
+                   </svg> 
+                    </button>
 
                 <div className="relative w-full max-w-[390px] bg-[#121212] rounded-[32px] px-4 pb-8 pt-2 flex flex-col items-center shadow-2xl">
                     {/* Header */}
@@ -111,8 +111,8 @@ export default function PriceDetailsPage() {
                                                             key={index}
                                                             className={
                                                                 index > 0
-                                                                    ? "text-white/40 text-[13px] font-light uppercase ml-1"
-                                                                    : "text-white text-[16px] font-bold uppercase"
+                                                                    ? "text-white/40 text-[16px] font-light uppercase ml-1"
+                                                                    : "text-white text-[18px] font-bold uppercase"
                                                             }
                                                         >
                                                             {index === 0 ? part.trim() : `/${part.trim()}`}
@@ -155,8 +155,8 @@ export default function PriceDetailsPage() {
                                                             key={index}
                                                             className={
                                                                 index > 0
-                                                                    ? "text-white/40 text-[13px] font-light uppercase"
-                                                                    : "text-white text-[14px] font-bold uppercase"
+                                                                    ? "text-white/40 text-[14px] font-light uppercase"
+                                                                    : "text-white text-[16px] font-bold uppercase"
                                                             }
                                                         >
                                                             {index === 0 ? part.trim() : `/${part.trim()}`}
