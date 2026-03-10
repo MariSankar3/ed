@@ -1,0 +1,113 @@
+{
+  "total_en_keys": 815,
+  "languages": [
+    "ar",
+    "da",
+    "de",
+    "en",
+    "es",
+    "fr",
+    "id",
+    "it",
+    "ja",
+    "ko",
+    "nl",
+    "pl",
+    "pt",
+    "ru",
+    "sn",
+    "so",
+    "sv",
+    "ta",
+    "th",
+    "tr",
+    "vi",
+    "zh"
+  ],
+  "sync_status": {
+    "ar.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "da.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "de.json": {
+      "missing": 0,
+      "extra": 4
+    },
+    "es.json": {
+      "missing": 0,
+      "extra": 4
+    },
+    "fr.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "id.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "it.json": {
+      "missing": 0,
+      "extra": 4
+    },
+    "ja.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "ko.json": {
+      "missing": 0,
+      "extra": 4
+    },
+    "nl.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "pl.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "pt.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "ru.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "sn.json": {
+      "missing": 0,
+      "extra": 4
+    },
+    "so.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "sv.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "ta.json": {
+      "missing": 0,
+      "extra": 4
+    },
+    "th.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "tr.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "vi.json": {
+      "missing": 0,
+      "extra": 0
+    },
+    "zh.json": {
+      "missing": 0,
+      "extra": 0
+    }
+  }
+}
