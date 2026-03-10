@@ -86,11 +86,9 @@ export const LanguageProvider = ({ children }) => {
 
     initLanguage();
 
-    const handleLanguageChange = async () => {
+    const handleLanguageChange = () => {
       localStorage.removeItem("ethereal_explicit_lang");
-      const lang = await detectLanguage();
-      await loadLanguageTranslations(lang);
-      setTargetLang(lang);
+      window.location.reload();
     };
 
     window.addEventListener("languagechange", handleLanguageChange);

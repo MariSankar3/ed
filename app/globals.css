@@ -165,9 +165,80 @@ html {
 }
 
 
+
 @media (min-width: 1700px) {
 .xl-4{
   width: 100px;
   height: 100px;
 }
+}
+
+/* 3D and Border Beam Effect */
+@keyframes border-beam-rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.border-beam-container {
+  position: relative;
+  isolation: isolate;
+}
+
+.border-beam {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 3px; /* Beam thickness */
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  z-index: 50; /* Ensure it's on top of skewed content */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  overflow: hidden;
+}
+
+.border-beam-container:hover .border-beam {
+  opacity: 1;
+}
+
+.border-beam::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    #D9FF00 320deg,
+    #D9FF00 350deg,
+    transparent 360deg
+  );
+  transform: translate(-50%, -50%);
+  animation: border-beam-rotate 4s linear infinite;
+  will-change: transform;
+}
+
+.card-hover-shadow {
+  transition: box-shadow 0.4s ease;
+}
+
+.card-hover-shadow:hover {
+  box-shadow: 0 20px 60px -15px rgba(217, 255, 0, 0.4);
 }

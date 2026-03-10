@@ -215,12 +215,12 @@ function RightSecContent({ setActiveIndex, parentActiveIndex }) {
   /* ---------- helpers ---------- */
   const getCardHeight = (isActive) => {
     const heights = {
-      xs: { active: 365, inactive: 350 },
-      sm: { active: 400, inactive: 380 },
-      md: { active: 500, inactive: 420 },
-      lg: { active: 550, inactive: 450 },
-      xl: { active: 600, inactive: 480 },
-      "2xl": { active: 600, inactive: 480 },
+      xs: { active: 385, inactive: 360 },
+      sm: { active: 420, inactive: 395 },
+      md: { active: 520, inactive: 480 },
+      lg: { active: 520, inactive: 530 },
+      xl: { active: 600, inactive: 500 },
+      "2xl": { active: 600, inactive: 520 },
     };
     return isActive
       ? heights[currentBreakpoint].active

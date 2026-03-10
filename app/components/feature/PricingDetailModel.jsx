@@ -188,7 +188,7 @@ export default function PricingDetailModel({
               )}
 
               {data.features ? (
-                <ul className="flex flex-col w-full">
+                <ul className="flex flex-col w-full -ml-4">
                   {data.features.map((feature, idx) => {
                     const translatedFeature = t(
                       `pricing_${data.categoryKey}_ft_${idx}`,
@@ -197,9 +197,9 @@ export default function PricingDetailModel({
                     return (
                       <li
                         key={idx}
-                        className="w-[110%] py-2 ml-[-28px] border-b border-[#ffffff1a]/50 last:border-b-0 flex items-center group"
+                        className="w-full py-2 border-b border-[#ffffff1a]/50 last:border-b-0 flex items-center group"
                       >
-                        <span className="font-antonio tracking-widest flex items-baseline">
+                        <div className="font-antonio tracking-wide flex flex-wrap items-baseline gap-x-2">
                           {translatedFeature.split(" /").map((part, index) => (
                             <span
                               key={index}
@@ -212,7 +212,7 @@ export default function PricingDetailModel({
                               {index === 0 ? part.trim() : `/${part.trim()}`}
                             </span>
                           ))}
-                        </span>
+                        </div>
                       </li>
                     );
                   })}

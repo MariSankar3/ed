@@ -1,13 +1,90 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 import { Close } from "../icons/icons";
 import PricingDetailModel from "./PricingDetailModel";
 import { oneTimeProjects, monthlyPods } from "../../data/pricingData";
 import Link from "next/link";
 import { useLanguage } from "../../context/LanguageContext";
 
+const springValues = {
+  damping: 30,
+  stiffness: 100,
+  mass: 2,
+};
+
+const TiltedCardWrapper = ({
+  children,
+  className = "",
+  borderRadius = "30px",
+}) => {
+  const ref = useRef(null);
+  const rotateX = useSpring(useMotionValue(0), springValues);
+  const rotateY = useSpring(useMotionValue(0), springValues);
+  const scale = useSpring(1, springValues);
+
+  function handleMouse(e) {
+    if (!ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const offsetX = e.clientX - centerX;
+    const offsetY = e.clientY - centerY;
+
+    // Amplitude of rotation (higher = more tilt)
+    const rotateAmplitude = 12;
+    const rotationX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
+    const rotationY = (offsetX / (rect.width / 2)) * rotateAmplitude;
+
+    rotateX.set(rotationX);
+    rotateY.set(rotationY);
+  }
+
+  function handleMouseEnter() {
+    scale.set(1.02);
+  }
+
+  function handleMouseLeave() {
+    scale.set(1);
+    rotateX.set(0);
+    rotateY.set(0);
+  }
+
+  return (
+    <div
+      ref={ref}
+      className={`relative perspective-1000 w-full h-full ${className}`}
+      onMouseMove={handleMouse}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <motion.div
+        className="relative preserve-3d w-full h-full border-beam-container"
+        style={{
+          rotateX,
+          rotateY,
+          scale,
+          borderRadius,
+        }}
+      >
+        <div
+          className="border-beam"
+          aria-hidden="true"
+          style={{ borderRadius }}
+        />
+        {children}
+      </motion.div>
+    </div>
+  );
+};
 const modalVariants = {
   hidden: { opacity: 0, y: 100 },
   visible: {
@@ -41,7 +118,7 @@ const TierCard = ({ tier, categoryKey, tierIndex }) => {
             {t(`pricing_${categoryKey}_tier_${tierIndex}_title`, tier.title)}
           </h3>
           <div className="flex items-baseline gap-1 mt-1">
-            <span className="text-white/70 text-[13px] font-antonio">
+            <span className="text-white/70 text-[14px] font-antonio">
               {t("pricing_starting_at", "Starting at")}
             </span>
             <span className="text-[#D9FF00] text-2xl font-bold font-antonio">
@@ -59,25 +136,25 @@ const TierCard = ({ tier, categoryKey, tierIndex }) => {
 
       <div className="w-full border-t border-[#ffffff1a] mb-6" />
 
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 -ml-6">
         {tier.features.map((feature, idx) => {
           const translatedFeature = t(
             `pricing_${categoryKey}_tier_${tierIndex}_ft_${idx}`,
             feature,
           );
           return (
-            <li key={idx} className="flex flex-col ml-[-28px]">
-              <div className="flex items-center text-white font-antonio tracking-wider text-sm">
+            <li key={idx} className="flex flex-col">
+              <div className="flex flex-wrap items-baseline gap-x-2 text-white font-antonio tracking-wide text-sm">
                 {translatedFeature.split(" /").map((part, i) => (
                   <span
                     key={i}
                     className={
                       i === 0
-                        ? "font-bold text-[16px]"
-                        : "text-white/50 text-[14px] font-light ml-2"
+                        ? "font-bold text-[16px] uppercase"
+                        : "text-white/50 text-[14px] font-light uppercase"
                     }
                   >
-                    {i === 0 ? part : `/${part}`}
+                    {i === 0 ? part.trim() : `/${part.trim()}`}
                   </span>
                 ))}
               </div>
@@ -96,11 +173,11 @@ const PricingCard = ({ card, onAction, isMonthly, categoryKey }) => {
   const { t } = useLanguage();
   return (
     <div
-      className="flex flex-col w-full h-full justify-between items-center relative cursor-pointer group"
+      className="flex flex-col w-full h-full justify-between items-center relative cursor-pointer group [transform-style:preserve-3d]"
       onClick={isMonthly ? undefined : onAction}
       onMouseEnter={isMonthly ? onAction : undefined}
     >
-      <div className="w-full">
+      <div className="w-full [transform-style:preserve-3d]">
         <div className="flex w-full items-start justify-between mb-1">
           <h3 className="text-white text-xl md:text-2xl font-antonio font-bold w-2/3 flex-shrink min-w-0 pr-2 leading-tight">
             {t(`pricing_${categoryKey}_title`, card.title)}
@@ -126,12 +203,22 @@ const PricingCard = ({ card, onAction, isMonthly, categoryKey }) => {
         </p>
 
         {card.image && (
-          <div className="flex justify-center items-center py-4 h-60">
-            <img
-              src={card.image}
-              alt={card.title}
-              className="max-h-full object-contain"
+          <div className="flex justify-center items-center py-4 h-60 [transform-style:preserve-3d] relative">
+            {/* Subtle shadow on the card surface to enhance floating look */}
+            <div
+              className="absolute w-32 h-8 bg-black/40 blur-xl rounded-full bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{ transform: "translateZ(10px)" }}
             />
+            <motion.div
+              className="relative w-full h-full flex justify-center items-center"
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              <img
+                src={card.image}
+                alt={card.title}
+                className="max-h-full object-contain [transform:translateZ(100px)] drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform duration-500"
+              />
+            </motion.div>
           </div>
         )}
       </div>
@@ -351,7 +438,7 @@ export default function PricingModal({ open, onClose }) {
                             variants={cardVariants}
                             initial="hidden"
                             animate="visible"
-                            className={`relative w-full transition-all duration-300 min-h-[500px] flex flex-col mt-12 ${tier.isPopular ? "rounded-[34px] p-[3px] bg-[#D9FF00] bg-gradient-to-b from-[#D9FF00] via-[#D9FF00]/20 to-[#121212]/90" : ""}`}
+                            className={`relative w-full min-h-[500px] flex flex-col mt-12 ${tier.isPopular ? "rounded-[34px] p-[3px] bg-[#D9FF00] bg-gradient-to-b from-[#D9FF00] via-[#D9FF00]/20 to-[#121212]/90" : ""}`}
                           >
                             {tier.isPopular && (
                               <div className="absolute -top-[35px] left-0 right-0 h-[65px] bg-[#D9FF00] rounded-t-[33px] flex items-center justify-center z-0">
@@ -364,7 +451,7 @@ export default function PricingModal({ open, onClose }) {
                               </div>
                             )}
                             <div
-                              className={`w-full h-full bg-[#121212] rounded-[30px] p-6 md:p-8 flex flex-col relative z-20 ${tier.isPopular ? "hover:shadow-[0_0_25px_rgba(217,255,0,0.15)]" : "border border-[#ffffff1a] hover:border-[#D9FF00]/30"} transition-all duration-300 group`}
+                              className={`w-full h-full bg-[#121212] rounded-[30px] p-6 md:p-8 flex flex-col relative z-20 ${tier.isPopular ? "" : "border border-[#ffffff1a]"} transition-all duration-300 group`}
                             >
                               <TierCard
                                 tier={tier}
@@ -386,7 +473,7 @@ export default function PricingModal({ open, onClose }) {
                             variants={cardVariants}
                             initial="hidden"
                             animate="visible"
-                            className={`relative w-full max-w-[320px] transition-all duration-300 min-h-[400px] flex flex-col mt-16 ${currentData[key].isPopular ? "!mt-[60px] rounded-[34px] p-[4px] bg-gradient-to-b from-[#D9FF00] via-[#D9FF00]/20 to-[#121212]/90" : ""}`}
+                            className={`relative w-full max-w-[320px] min-h-[400px] flex flex-col mt-16 ${currentData[key].isPopular ? "!mt-[60px] rounded-[34px] p-[4px] bg-gradient-to-b from-[#D9FF00] via-[#D9FF00]/20 to-[#121212]/90" : ""}`}
                           >
                             {currentData[key].isPopular && (
                               <div className="absolute w-full -top-[36px] right-[0px] h-[100px] bg-[#D9FF00] rounded-t-[33.5px] flex items-start justify-center pt-2.5 z-0">
@@ -398,18 +485,25 @@ export default function PricingModal({ open, onClose }) {
                                 </span>
                               </div>
                             )}
-                            <div
-                              className={`w-full h-full bg-[#121212] rounded-[30px] p-5 md:p-6 flex flex-col relative z-20 ${currentData[key].isPopular ? "hover:shadow-[0_0_25px_rgba(217,255,0,0.15)]" : "border border-[#ffffff1a] hover:border-[#D9FF00]/60"} transition-all duration-300 group`}
+                            <TiltedCardWrapper
+                              className="h-full"
+                              borderRadius={
+                                currentData[key].isPopular ? "34px" : "30px"
+                              }
                             >
-                              <PricingCard
-                                card={currentData[key]}
-                                categoryKey={key}
-                                onAction={() =>
-                                  handleLearnMore(currentData[key], i, key)
-                                }
-                                isMonthly={true}
-                              />
-                            </div>
+                              <div
+                                className={`w-full h-full bg-[#121212] rounded-[30px] p-5 md:p-6 flex flex-col relative z-20 ${currentData[key].isPopular ? "" : "border border-[#ffffff1a]"} transition-all duration-300 group`}
+                              >
+                                <PricingCard
+                                  card={currentData[key]}
+                                  categoryKey={key}
+                                  onAction={() =>
+                                    handleLearnMore(currentData[key], i, key)
+                                  }
+                                  isMonthly={true}
+                                />
+                              </div>
+                            </TiltedCardWrapper>
                           </motion.div>
                         ))}
                       </div>
@@ -424,7 +518,7 @@ export default function PricingModal({ open, onClose }) {
                             variants={cardVariants}
                             initial="hidden"
                             animate="visible"
-                            className={`relative w-full max-w-[420px] md:max-w-none md:w-[calc(33.333%-1.34rem)] xl:w-[calc(20%-1.6rem)] transition-all duration-300 flex flex-col min-h-[400px] mt-12 ${currentData[key].isPopular ? "rounded-[34px] p-[3px] bg-[#D9FF00]" : ""}`}
+                            className={`relative w-full max-w-[420px] md:max-w-none md:w-[calc(33.333%-1.34rem)] xl:w-[calc(20%-1.6rem)] flex flex-col min-h-[400px] mt-12 ${currentData[key].isPopular ? "rounded-[34px] p-[3px] bg-[#D9FF00]" : ""}`}
                           >
                             {currentData[key].isPopular && (
                               <div className="absolute -top-[35px] left-0 right-0 h-[40px] bg-[#D9FF00] rounded-t-[33px] flex items-start justify-center pt-2.5 z-0">
@@ -436,16 +530,23 @@ export default function PricingModal({ open, onClose }) {
                                 </span>
                               </div>
                             )}
-                            <div
-                              className={`w-full h-full bg-[#121212] rounded-[30px] p-6 md:p-8 flex flex-col relative z-20 ${currentData[key].isPopular ? "hover:shadow-[0_0_25px_rgba(217,255,0,0.15)]" : "border border-[#ffffff1a] hover:border-[#D9FF00]/30"} transition-all duration-300 group`}
+                            <TiltedCardWrapper
+                              className="h-full"
+                              borderRadius={
+                                currentData[key].isPopular ? "34px" : "30px"
+                              }
                             >
-                              <PricingCard
-                                card={currentData[key]}
-                                categoryKey={key}
-                                onAction={() => handleProjectClick(key)}
-                                isMonthly={false}
-                              />
-                            </div>
+                              <div
+                                className={`w-full h-full bg-[#121212] rounded-[30px] p-6 md:p-8 flex flex-col relative z-20 ${currentData[key].isPopular ? "" : "border border-[#ffffff1a]"} transition-all duration-300 group [transform-style:preserve-3d]`}
+                              >
+                                <PricingCard
+                                  card={currentData[key]}
+                                  categoryKey={key}
+                                  onAction={() => handleProjectClick(key)}
+                                  isMonthly={false}
+                                />
+                              </div>
+                            </TiltedCardWrapper>
                           </motion.div>
                         ))}
                       </div>

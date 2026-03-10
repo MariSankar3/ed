@@ -35,7 +35,6 @@ function LeftSec() {
     const secondaryLang = detectedLang !== "en" ? detectedLang : "de";
     const newLang = targetLang === "en" ? secondaryLang : "en";
     setTargetLang(newLang);
-    localStorage.setItem("ethereal_explicit_lang", newLang);
   };
 
   const CURRENT_COLOR = menuOpen

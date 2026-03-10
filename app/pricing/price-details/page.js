@@ -109,22 +109,22 @@ export default function PriceDetailsPage() {
                                             return (
                                             <li
                                                 key={idx}
-                                                className="w-[120%] py-4 -ml-9 border-b border-[#ffffff1a]/50 last:border-b-0 flex items-start group"
+                                                className="w-full py-3 -ml-5 border-b border-[#ffffff1a]/50 last:border-b-0"
                                             >
-                                                <span className="font-antonio tracking-widest flex items-baseline">
+                                                <div className="font-antonio tracking-wide text-white leading-relaxed">
                                                     {translatedFeature.split(" /").map((part, index) => (
                                                         <span
                                                             key={index}
                                                             className={
                                                                 index > 0
-                                                                    ? "text-white/40 text-[16px] font-light uppercase ml-1"
+                                                                    ? "text-white/40 text-[16px] font-light uppercase"
                                                                     : "text-white text-[18px] font-bold uppercase"
                                                             }
                                                         >
-                                                            {index === 0 ? part.trim() : `/${part.trim()}`}
+                                                            {index === 0 ? part.trim() : ` / ${part.trim()}`}
                                                         </span>
                                                     ))}
-                                                </span>
+                                                </div>
                                             </li>
                                         )})}
                                     </ul>
@@ -153,9 +153,9 @@ export default function PriceDetailsPage() {
                                             return (
                                             <li
                                                 key={idx}
-                                                className="w-full py-3 border-b border-[#ffffff1a]/50 last:border-b-0 flex items-center group"
+                                                className="w-full py-3  border-b border-[#ffffff1a]/50 last:border-b-0"
                                             >
-                                                <span className="font-antonio tracking-widest flex items-baseline">
+                                                <div className="font-antonio tracking-wide text-white leading-relaxed">
                                                     {translatedFeature.split(" /").map((part, index) => (
                                                         <span
                                                             key={index}
@@ -165,10 +165,10 @@ export default function PriceDetailsPage() {
                                                                     : "text-white text-[16px] font-bold uppercase"
                                                             }
                                                         >
-                                                            {index === 0 ? part.trim() : `/${part.trim()}`}
+                                                            {index === 0 ? part.trim() : ` / ${part.trim()}`}
                                                         </span>
                                                     ))}
-                                                </span>
+                                                </div>
                                             </li>
                                         )})}
                                     </ul>
