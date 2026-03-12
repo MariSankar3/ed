@@ -23,6 +23,11 @@ export const metadata = {
   },
 };
 
+export function generateStaticParams() {
+  return [{ locale: 'en' }];
+}
+
+
 function page() {
   
   return (
