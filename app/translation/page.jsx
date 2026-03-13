@@ -221,12 +221,35 @@ export default function TranslationDeveloperPage() {
           disabled={isTranslating}
           className="w-full bg-[#1A1A1A] border border-[#ffffff33] text-white p-4 rounded-xl mb-8 outline-none focus:border-[#D9FF00] transition-colors appearance-none font-antonio text-lg"
         >
-          {languages.map((lang) => (
-            <option key={lang.code} value={lang.code}>
-              {lang.name} ({lang.code}){" "}
-              {generatedLanguages.includes(lang.code) ? "✓ (Generated)" : ""}
-            </option>
-          ))}
+          {isFetchingLanguages ? (
+            <option value="">Loading languages...</option>
+          ) : (
+            <>
+              {/* Already generated — shown at the top */}
+              {languages.filter((l) => generatedLanguages.includes(l.code))
+                .length > 0 && (
+                <optgroup label="✅ Already Generated">
+                  {languages
+                    .filter((l) => generatedLanguages.includes(l.code))
+                    .map((lang) => (
+                      <option key={lang.code} value={lang.code}>
+                        ✅ {lang.name} ({lang.code}) — Generated
+                      </option>
+                    ))}
+                </optgroup>
+              )}
+              {/* Not yet generated */}
+              <optgroup label="➕ New Languages">
+                {languages
+                  .filter((l) => !generatedLanguages.includes(l.code))
+                  .map((lang) => (
+                    <option key={lang.code} value={lang.code}>
+                      {lang.name} ({lang.code})
+                    </option>
+                  ))}
+              </optgroup>
+            </>
+          )}
         </select>
 
         {isFetchingLanguages ? (
