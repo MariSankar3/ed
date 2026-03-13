@@ -18,7 +18,7 @@ export const LanguageProvider = ({ children }) => {
     try {
       // By putting these json files in /public, they act identically to images on a CDN
       // Prevents `output: export` static build crashing in Next.js from dynamic APIs
-      const resp = await fetch(`/${lang}.json`);
+      const resp = await fetch(`/locales/${lang}.json`);
       if (resp.ok) {
         const data = await resp.json();
         translationsCache[lang] = data;
