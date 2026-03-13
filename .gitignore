@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# API routes are dev-only tools (translation generator/sync) — not needed on S3
+/app/api/
+
+# translation system runtime files (not needed in repo)
+.sync_state.json
+sync_report.json
+lint_output.txt

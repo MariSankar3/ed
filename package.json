@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "prebuild": "node scripts/generate-translations.js",
     "build": "next build",
+    "build:static": "node scripts/generate-translations.js && node scripts/build-static.js",
     "start": "next start",
     "lint": "next lint"
   },
